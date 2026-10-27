@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Serviço do Banco de Dados
+  librarydb:
+    image: postgres:16.3
+    container_name: librarydb
+    ports:
+      - "5433:5432" # Mantém a porta 5433 para não brigar com o Windows da outra máquina
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=library
+    networks:
+      - library-network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Serviço do pgAdmin já pré-configurado
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    ports:
+      - "15432:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    networks:
+      - library-network
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+networks:
+  library-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  pgadmin-data:
+
+  

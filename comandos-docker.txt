@@ -1,0 +1,41 @@
+## VERIFICANDO A VERSÃO
+docker --version
+
+## VERIFICANDO AS IMG RODANDO
+docker ps
+
+## COMANDO PARA CRIAR A NETWORK
+docker network create nome
+
+##CRIANDO A IMG DO BANCO
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD= -e POSTGRES_USER= -e POSTGRES_DB=library --network library-network postgres:16.3
+
+##CRIANDO A IMG DO BANCO "ACRECENTANDO O -d ISSO PERMITE FECHAR AS TELA DE CMD"
+//postgres nome banco
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD= -e POSTGRES_USER= -e POSTGRES_DB=library postgres:16.3
+
+ ## COMANDO PARA CRIAR A IMG DE SGBD
+ docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin dpage/pgadmin4
+
+  ## COMANDO PARA CRIAR A IMG DE SGBD "ACRECENTANDO O -d ISSO PERMITE FECHAR AS TELA DE CMD"
+  docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network dpage/pgadmin4
+
+
+
+## COMANDO PARA DAR STOP NOS CONTAINERS
+docker stop
+
+## COMANDO PARA STARTA OS CONTAINERS
+docker ps -a
+
+## COMANDO PARA DELETAR OS CONTAINERS
+docker container rm
+
+## COMANDO PARA CRIA UMA NETWORK
+docker network create library-networl
+
+##COMANDO PARA VERIFICAR SE A PORTA ESTA SENDO UTILIZADA
+netstart -aof | findstr 5433
+
+Na raiz do projeto baixado, execute o comando mágico do Docker que vai ler o arquivo que você criou, baixar as imagens corretas, criar a network e iniciar os servidores automaticamente:bash
+docker compose up -d
