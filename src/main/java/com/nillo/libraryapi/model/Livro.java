@@ -2,13 +2,16 @@ package com.nillo.libraryapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(name="livro")
 @Data
+@ToString(exclude = "autor")
 public class Livro {
 
     @Id
@@ -30,9 +33,9 @@ public class Livro {
     private GeneroLivro genero;
 
     @Column(name = "preco", precision = 18, scale = 2)
-    private Double preco;
+    private BigDecimal preco;
 
-    @ManyToOne
-    @JoinColumn (name = "idAutor")
+    @ManyToOne (fetch = FetchType.LAZY) //(cascade = CascadeType.ALL) //criando um metodo cascade
+    @JoinColumn (name = "id_autor")
     private Autor autor;
 }

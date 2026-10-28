@@ -3,7 +3,9 @@ package com.nillo.libraryapi.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
 @Table(name="autor", schema = "public")
 @Getter
 @Setter
+@ToString (exclude = {"livros"})
 public class Autor {
     @Id
     @Column(name = "id")
@@ -23,13 +26,13 @@ public class Autor {
     private String nome;
 
     @Column(name = "data_nascimento", length = 50, nullable = false)
-    private String data_nascimento;
+    private LocalDate data_nascimento;
 
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "autor")
-    private List<Livro> livros;
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Livro> livros; //@Transient
 
 
     /*@Deprecated
